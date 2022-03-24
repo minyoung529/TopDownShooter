@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using static Define;
 
+// 기능과 인풋을 분리한다는 게 의의
 public class AgentInput : MonoBehaviour
 {
     public UnityEvent<Vector2> OnMovementKeyPress;
@@ -24,8 +26,8 @@ public class AgentInput : MonoBehaviour
         Vector3 mousePos = Input.mousePosition;
         mousePos.z = 0f;
         //LATER::FIX
-        Vector2 mouseInWorldPos = Camera.main.ScreenToWorldPoint(mousePos);
+        Vector2 mouseInWorldPos = Define.MainCam.ScreenToWorldPoint(mousePos);
 
-        OnPointerPositionChange?.Invoke(mousePos);
+        OnPointerPositionChange?.Invoke(mouseInWorldPos );
     }
 }
