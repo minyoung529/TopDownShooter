@@ -4948,7 +4948,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 391975723963902551, guid: 430a2663e6e72af4385c6aa12f79ba1b, type: 3}
       propertyPath: timeRandomness
-      value: 0.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 391975723963902551, guid: 430a2663e6e72af4385c6aa12f79ba1b, type: 3}
       propertyPath: radiusRandomness
