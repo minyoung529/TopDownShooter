@@ -6,7 +6,8 @@ using UnityEngine;
 public class WeaponDataSO : ScriptableObject
 {
     public GameObject prefab;
-    // TODO: 총알 데이터 넣기
+
+    public BulletDataSO bulletData;
 
     /// <summary>
     /// 탄창 크기
@@ -31,7 +32,7 @@ public class WeaponDataSO : ScriptableObject
     public bool multiBulletShoot = false;
 
     [SerializeField] private int bulletcount = 1;
-    [SerializeField] private int damageFactor = 1;
+    public int damageFactor = 1;
 
     [Range(0.1f, 2f)] public float reloadTime = 0.1f;
 

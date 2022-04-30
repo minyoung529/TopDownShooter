@@ -10,8 +10,9 @@ public class AgentWeapon : MonoBehaviour
     // 무기 바라보는 방향
     protected float desireAngle;
 
-    void Awake()
+    protected void Awake()
     {
+        Debug.Log("sdf");
         AssignWeapon();
         AwakeChild();
     }
@@ -46,15 +47,11 @@ public class AgentWeapon : MonoBehaviour
 
     public virtual void Shoot()
     {
-        if (weapon = null) return;
-
-        weapon.TryShooting();
+        weapon?.TryShooting();
     }
 
     public virtual void StopShooting()
     {
-        if (weapon = null) return;
-
-        weapon.StopShooting();
+        weapon?.StopShooting();
     }
 }

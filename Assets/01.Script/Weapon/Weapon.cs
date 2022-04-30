@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 public class Weapon : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] protected WeaponDataSO weaponData;
     [SerializeField] protected GameObject muzzle; // 총구의 위치
     [SerializeField] protected Transform shellEjectPos; // 탄피 생성 지점
+    [SerializeField] protected bool isEnemyWeapon = false; // 탄피 생성 지점
     #endregion
 
     public UnityEvent<int> OnAmmoChange;
@@ -100,7 +102,23 @@ public class Weapon : MonoBehaviour
 
     private void ShootBullet()
     {
-        Debug.Log("Shoot");
+        SpawnBullet(muzzle.transform.position, CalculateAngle(muzzle), isEnemyWeapon);
+    }
+
+    private Quaternion CalculateAngle(GameObject muzzle)
+    {
+        float spread = Random.Range(-weaponData.spreadAngle, weaponData.spreadAngle);
+        Quaternion spreadRot = Quaternion.Euler(0f, 0f, spread);
+        
+        return muzzle.transform.rotation * spreadRot;
+    }
+
+    private void SpawnBullet(Vector3 pos, Quaternion rot, bool isEnemy)
+    {
+        Bullet obj = PoolManager.Instance.Pop(weaponData.bulletData.prefab.name) as Bullet;
+        obj.SetPositionAndRotation(pos, rot);
+        obj.BulletData = weaponData.bulletData;
+        obj.IsEnemy = isEnemy;
     }
 
     public void TryShooting()
