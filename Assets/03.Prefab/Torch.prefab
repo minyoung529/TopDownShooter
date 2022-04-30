@@ -116,6 +116,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44a918df8cf95b8408e6543e2b95d27b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  changeRadius: 1
+  intensityRandomness: 0.5
+  radiusRandomness: 0.5
+  timeRandomness: 2
 --- !u!1 &3237369544218029636
 GameObject:
   m_ObjectHideFlags: 0
@@ -170,7 +174,7 @@ MonoBehaviour:
   m_UseNormalMap: 0
   m_LightOrder: 0
   m_AlphaBlendOnOverlap: 0
-  m_ShadowIntensity: 0
+  m_ShadowIntensity: 0.75
   m_ShadowVolumeIntensity: 0
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360

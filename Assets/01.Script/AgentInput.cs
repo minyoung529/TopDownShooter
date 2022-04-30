@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,10 +11,17 @@ public class AgentInput : MonoBehaviour
     public UnityEvent<Vector2> OnMovementKeyPress;
     public UnityEvent<Vector2> OnPointerPositionChange;
 
+    // ´Ü¹ßÇü ÃÑ, ±â°üÃÑ Ã³¸®
+    public UnityEvent OnFireButtonPress;
+    public UnityEvent OnFireButtonRelease;
+
+    private bool fireButtonDown = false;
+
     private void Update()
     {
         GetMovementInput();
         GetPointerInput();
+        GetFireInput();
     }
 
     private void GetMovementInput()
@@ -28,6 +36,26 @@ public class AgentInput : MonoBehaviour
         //LATER::FIX
         Vector2 mouseInWorldPos = Define.MainCam.ScreenToWorldPoint(mousePos);
 
-        OnPointerPositionChange?.Invoke(mouseInWorldPos );
+        OnPointerPositionChange?.Invoke(mouseInWorldPos);
+    }
+
+    private void GetFireInput()
+    {
+        if (Input.GetAxisRaw("Fire1") > 0)
+        {
+            if (!fireButtonDown)
+            {
+                fireButtonDown = true;
+                OnFireButtonPress.Invoke();
+            }
+        }
+        else
+        {
+            if (fireButtonDown)
+            {
+                fireButtonDown = false;
+                OnFireButtonRelease.Invoke();
+            }
+        }
     }
 }

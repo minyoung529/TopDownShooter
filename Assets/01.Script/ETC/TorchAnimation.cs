@@ -25,7 +25,7 @@ public class TorchAnimation : MonoBehaviour
         baseRadius = light.pointLightOuterRadius;
     }
 
-    private void Start()
+    private void OnEnable()
     {
         ShakeLight();
     }
@@ -34,6 +34,8 @@ public class TorchAnimation : MonoBehaviour
     {
         // dotween sequence로 한번 불을 흔든ㄴ다
         // 마지막에 다시 한 번 shake light
+
+        if (!gameObject.activeSelf) return;
 
         float targetIntensity = baseIntensity + Random.Range(-intensityRandomness, intensityRandomness);
         float targetTime = baseTime + Random.Range(-timeRandomness, timeRandomness);
@@ -51,10 +53,11 @@ public class TorchAnimation : MonoBehaviour
             //time
             targetTime));
 
-        if(changeRadius)
+        if (changeRadius)
         {
-            seq.Append(DOTween.To(
-                ()=>light.pointLightOuterRadius,
+            seq.Append(
+                DOTween.To(
+                () => light.pointLightOuterRadius,
                 value => light.pointLightOuterRadius = value,
                 targetRadius,
                 targetTime
