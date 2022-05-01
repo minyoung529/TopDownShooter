@@ -37,7 +37,7 @@ public class WeaponDataSO : ScriptableObject
     [Range(0.1f, 2f)] public float reloadTime = 0.1f;
 
     public AudioClip shootClip;
-    public AudioClip outOfAmmoCount;
+    public AudioClip outOfAmmoClip;
     public AudioClip reloadClip;
     public Sprite sprite;
 

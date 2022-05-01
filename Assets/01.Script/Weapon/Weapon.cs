@@ -47,6 +47,8 @@ public class Weapon : MonoBehaviour
     private void Awake()
     {
         ammo = weaponData.ammoCapacity;
+        WeaponAudio weaponAudio = transform.Find("WeaponAudio").GetComponentInChildren<WeaponAudio>();
+        weaponAudio.SetAudioClip(weaponData.shootClip, weaponData.outOfAmmoClip, weaponData.reloadClip);
     }
 
     private void Update()
@@ -56,28 +58,28 @@ public class Weapon : MonoBehaviour
 
     private void UseWeapon()
     {
-        if(isShooting && !delayCoroutine)
+        if (isShooting && !delayCoroutine)
         {
-            if(Ammo > 0 || weaponData.infiniteAmmo)
+            if (Ammo > 0 || weaponData.infiniteAmmo)
             {
-                if(!weaponData.infiniteAmmo)
+                if (!weaponData.infiniteAmmo)
                 {
                     Ammo--;
                 }
 
                 OnShoot?.Invoke();
 
-                for(int i = 0; i<weaponData.GetBulletCount(); i++)
+                for (int i = 0; i < weaponData.GetBulletCount(); i++)
                 {
                     ShootBullet();
                 }
             }
-        }
-        else
-        {
-            isShooting = false;
-            OnShootNoAmmo?.Invoke();
-            return;
+            else
+            {
+                isShooting = false;
+                OnShootNoAmmo?.Invoke();
+                return;
+            }
         }
 
         FinishShooting(); // 한 발 사격을 성공적으로 끝내고 난 뒤
@@ -85,7 +87,8 @@ public class Weapon : MonoBehaviour
 
     protected void FinishShooting()
     {
-        StartCoroutine(DelayNextShootCoroutine());
+        if (!delayCoroutine)
+            StartCoroutine(DelayNextShootCoroutine());
 
         if (!weaponData.automaticFire)
         {
@@ -109,7 +112,7 @@ public class Weapon : MonoBehaviour
     {
         float spread = Random.Range(-weaponData.spreadAngle, weaponData.spreadAngle);
         Quaternion spreadRot = Quaternion.Euler(0f, 0f, spread);
-        
+
         return muzzle.transform.rotation * spreadRot;
     }
 

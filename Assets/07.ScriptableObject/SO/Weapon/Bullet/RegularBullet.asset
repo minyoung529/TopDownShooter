@@ -23,7 +23,7 @@ MonoBehaviour:
   goThourghHit: 0
   isRayCast: 0
   isCharging: 0
-  impactObstaclePrefab: {fileID: 0}
+  impactObstaclePrefab: {fileID: 5998466867026875974, guid: f354960c84470ef4bb1cc36544155c4c, type: 3}
   impactEnemyPrefab: {fileID: 0}
   knockBackPower: 5
   knockBackDelay: 0.1

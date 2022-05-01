@@ -49,13 +49,13 @@ public class RegularBullet : Bullet
     {
         timeToLive += Time.fixedDeltaTime;
 
-        if(timeToLive > bulletData.lifeTime)
+        if (timeToLive > bulletData.lifeTime)
         {
             isDead = true;
             PoolManager.Instance.Push(this);
         }
 
-        if(rigid != null && bulletData != null)
+        if (rigid != null && bulletData != null)
         {
             rigid.MovePosition(transform.position + bulletData.bulletSpeed * transform.right * Time.deltaTime);
         }
@@ -63,7 +63,37 @@ public class RegularBullet : Bullet
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        if (isDead) return;
+
+        if (collision.gameObject.layer == obstacleLayer)
+        {
+            Debug.Log("Wall");
+            HitObstacle(collision);
+        }
+        else if (collision.gameObject.layer == enemyLayer)
+        {
+            HitEnemy(collision);
+        }
+
+        isDead = true;
+        PoolManager.Instance.Push(this);
+    }
+
+    private void HitEnemy(Collider2D collider)
+    {
+
+    }
+
+    private void HitObstacle(Collider2D collider)
+    {
+        Ray ray = new Ray(transform.position, transform.right);
+        RaycastHit2D hitInfo = Physics2D.Raycast(ray.origin, ray.direction);
+
+        if(hitInfo)
+        {
+            ImpactScript impact = PoolManager.Instance.Pop("ImpactObstacle") as ImpactScript;
+            impact.SetPosAndRot(hitInfo.point, Quaternion.Euler(0f, 0f, Random.Range(-180, 180f)));
+        }
     }
 
     public override void Reset()
