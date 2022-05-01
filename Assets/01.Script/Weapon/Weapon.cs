@@ -9,6 +9,8 @@ public class Weapon : MonoBehaviour
 {
     #region Data
     [SerializeField] protected WeaponDataSO weaponData;
+    public WeaponDataSO WeaponData { get => weaponData; }
+
     [SerializeField] protected GameObject muzzle; // 총구의 위치
     [SerializeField] protected Transform shellEjectPos; // 탄피 생성 지점
     [SerializeField] protected bool isEnemyWeapon = false; // 탄피 생성 지점

@@ -2,25 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PoolManager : MonoBehaviour
+public class PoolManager
 {
     public static PoolManager Instance;
 
     private Dictionary<string, Pool<PoolableMono>> pools = new Dictionary<string, Pool<PoolableMono>>();
 
-    private void Awake()
+    private Transform parentTransform;
+    public PoolManager(Transform trmParent)
     {
-        if (Instance != null)
-        {
-            Debug.LogError("Multiple PoolManager is running!");
-        }
-
-        Instance = this;
+        parentTransform = trmParent;
     }
 
     public void CreatePool(PoolableMono prefab, int count = 10)
     {
-        Pool<PoolableMono> pool = new Pool<PoolableMono>(prefab, transform);
+        Pool<PoolableMono> pool = new Pool<PoolableMono>(prefab, parentTransform);
         pools.Add(prefab.gameObject.name, pool);
     }
 
@@ -43,7 +39,7 @@ public class PoolManager : MonoBehaviour
     
         if (!pools.ContainsKey(obj.name))
         {
-            Pool<PoolableMono> pool = new Pool<PoolableMono>(obj, transform);
+            Pool<PoolableMono> pool = new Pool<PoolableMono>(obj, parentTransform);
             pools.Add(obj.name.Trim(), pool);
         }
 

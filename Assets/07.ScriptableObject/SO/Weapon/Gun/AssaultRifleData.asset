@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 0}
   bulletData: {fileID: 11400000, guid: 5784d3372c63f3242a6140887e1abd27, type: 2}
-  ammoCapacity: 50
+  ammoCapacity: 10
   automaticFire: 1
   weaponDelay: 0.1
   spreadAngle: 5

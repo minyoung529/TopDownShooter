@@ -11,9 +11,10 @@ public class AgentInput : MonoBehaviour
     public UnityEvent<Vector2> OnMovementKeyPress;
     public UnityEvent<Vector2> OnPointerPositionChange;
 
-    // ´Ü¹ßÇü ÃÑ, ±â°üÃÑ Ã³¸®
     public UnityEvent OnFireButtonPress;
     public UnityEvent OnFireButtonRelease;
+
+    public UnityEvent OnReloadButtonPress;
 
     private bool fireButtonDown = false;
 
@@ -22,6 +23,7 @@ public class AgentInput : MonoBehaviour
         GetMovementInput();
         GetPointerInput();
         GetFireInput();
+        GetReloadInput();
     }
 
     private void GetMovementInput()
@@ -56,6 +58,14 @@ public class AgentInput : MonoBehaviour
                 fireButtonDown = false;
                 OnFireButtonRelease.Invoke();
             }
+        }
+    }
+
+    private void GetReloadInput()
+    {
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            OnReloadButtonPress?.Invoke();
         }
     }
 }

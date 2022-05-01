@@ -12,6 +12,7 @@ public class RegularBullet : Bullet
 
     private int enemyLayer;
     private int obstacleLayer;
+    private int bulletLayer;
 
     private bool isDead = false; // 한 개의 총알이 여러명에 적에 영향주는 것을 막기 위함
 
@@ -43,6 +44,7 @@ public class RegularBullet : Bullet
     private void Awake()
     {
         obstacleLayer = LayerMask.NameToLayer("Obstacle");
+        bulletLayer = LayerMask.NameToLayer("Bullet");
     }
 
     private void FixedUpdate()
@@ -75,6 +77,8 @@ public class RegularBullet : Bullet
             HitEnemy(collision);
         }
 
+        if (bulletData.goThourghHit || collision.gameObject.layer == bulletLayer) return;
+
         isDead = true;
         PoolManager.Instance.Push(this);
     }
@@ -89,10 +93,12 @@ public class RegularBullet : Bullet
         Ray ray = new Ray(transform.position, transform.right);
         RaycastHit2D hitInfo = Physics2D.Raycast(ray.origin, ray.direction);
 
-        if(hitInfo)
+        if(hitInfo.collider != null)
         {
-            ImpactScript impact = PoolManager.Instance.Pop("ImpactObstacle") as ImpactScript;
-            impact.SetPosAndRot(hitInfo.point, Quaternion.Euler(0f, 0f, Random.Range(-180, 180f)));
+            ImpactScript impact = PoolManager.Instance.Pop(bulletData.impactObstaclePrefab.name) as ImpactScript;
+
+            Quaternion randomRot = Quaternion.Euler(0f, 0f, Random.Range(0f, 360f));
+            impact.SetPosAndRot(hitInfo.point + (Vector2)transform.right * 0.5f, randomRot);
         }
     }
 
