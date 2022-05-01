@@ -6,13 +6,13 @@ using UnityEngine.Events;
 using static Define;
 
 // 기능과 인풋을 분리한다는 게 의의
-public class AgentInput : MonoBehaviour
+public class AgentInput : MonoBehaviour, IAgentInput
 {
-    public UnityEvent<Vector2> OnMovementKeyPress;
-    public UnityEvent<Vector2> OnPointerPositionChange;
-
-    public UnityEvent OnFireButtonPress;
-    public UnityEvent OnFireButtonRelease;
+    [field: SerializeField] public UnityEvent<Vector2> OnMovementKeyPress { get; set; }
+    [field: SerializeField] public UnityEvent<Vector2> OnPointerPositionChange { get; set; }
+    
+    [field: SerializeField] public UnityEvent OnFireButtonPress { get; set; }
+    [field: SerializeField] public UnityEvent OnFireButtonRelease { get; set; }
 
     public UnityEvent OnReloadButtonPress;
 
@@ -63,7 +63,7 @@ public class AgentInput : MonoBehaviour
 
     private void GetReloadInput()
     {
-        if(Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R))
         {
             OnReloadButtonPress?.Invoke();
         }

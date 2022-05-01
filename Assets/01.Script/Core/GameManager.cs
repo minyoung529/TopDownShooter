@@ -10,6 +10,20 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Texture2D cursorTexture;
     [SerializeField] private PoolingListSO initList;
 
+    private Transform playerTransform;
+    public Transform PlayerTransform
+    {
+        get
+        {
+            if (playerTransform == null)
+            {
+                playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+            }
+
+            return playerTransform;
+        }
+    }
+
     private void Awake()
     {
         if (Instance != null)

@@ -77,7 +77,7 @@ public class RegularBullet : Bullet
             HitEnemy(collision);
         }
 
-        if (bulletData.goThourghHit || collision.gameObject.layer == bulletLayer) return;
+        if (bulletData.goThourghHit) return;
 
         isDead = true;
         PoolManager.Instance.Push(this);
@@ -91,7 +91,7 @@ public class RegularBullet : Bullet
     private void HitObstacle(Collider2D collider)
     {
         Ray ray = new Ray(transform.position, transform.right);
-        RaycastHit2D hitInfo = Physics2D.Raycast(ray.origin, ray.direction);
+        RaycastHit2D hitInfo = Physics2D.Raycast(ray.origin, ray.direction, 1f, 1 << obstacleLayer);
 
         if(hitInfo.collider != null)
         {
